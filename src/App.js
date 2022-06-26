@@ -20,7 +20,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import LoanAppraisalInfo from "./LoanAppraisalInfo";
-import React, { useState } from 'react';
 import ConnectWallet from "./connectWallet";
 
 
