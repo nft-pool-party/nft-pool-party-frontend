@@ -80,9 +80,9 @@ const web3Onboard = init({
     }
   ],
   appMetadata: {
-    name: 'Blocknative',
+    name: 'NFT Pool Party',
     icon: '<svg><svg/>',
-    description: 'Demo app for Onboard V2',
+    description: 'Pool your NFTs',
     recommendedInjectedWallets: [
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
