@@ -56,7 +56,7 @@ function App() {
 
   useEffect(() => {
     if (address) {
-      getNFTs("0x959e104e1a4db6317fa58f8295f586e1a978c297", setNfts);
+      getNFTs("0xb25a1D02B029d53212e4c356B6DaaD419762E606", setNfts);
       console.log(nfts);
     }
   }, [address]);
