@@ -18,12 +18,11 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
+import LoanAppraisalInfo from "./LoanAppraisalInfo";
+import React, { useState } from 'react';
+
+
 // import WalletConnectProvider from "@walletconnect/web3-provider";
-
-
-
-
-
 // //  Create WalletConnect Provider
 // const provider = new WalletConnectProvider({
 //   infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
@@ -46,6 +45,7 @@ const theme = createTheme({
 const cards = [1, 2, 3];
 
 function App() {
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -98,15 +98,10 @@ function App() {
             >
               Appraise your NFT for a loan
             </Typography>
-            <Stack sx={{ pt: 4 }} spacing={2} alignItems="center">
-              <TextField
-                align="center"
-                label="Link Your NFT"
-                variant="standard"
-                sx={{ width: "75%" }}
-              />
-              <Button variant="contained"> Get your appraisal</Button>
-            </Stack>
+            
+            <LoanAppraisalInfo></LoanAppraisalInfo>
+
+            
 
             {/*
 
