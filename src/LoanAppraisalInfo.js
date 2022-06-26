@@ -17,10 +17,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-export default function LoanAppraisalInfo() {
+export default function LoanAppraisalInfo({contractAddresses}) {
   const API_BASE = "https://nameless-plateau-97799.herokuapp.com/";
 
-  const [contractAddresses, setContractAddresses] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [totalLoanAmount, setTotalLoanAmount] = useState(0.0);
   const [ltvRatio, setLtvRatio] = useState(0.0);
@@ -29,15 +28,15 @@ export default function LoanAppraisalInfo() {
     setInputValue(event.target.value);
   }
 
-  function handleOnAddNFT() {
-    // Add the current input to the contract addresses
-    setContractAddresses((prevContractAddresses) => [
-      ...prevContractAddresses,
-      inputValue,
-    ]);
-    // Delete input value
-    setInputValue("");
-  }
+//   function handleOnAddNFT() {
+//     // Add the current input to the contract addresses
+//     setContractAddresses((prevContractAddresses) => [
+//       ...prevContractAddresses,
+//       inputValue,
+//     ]);
+//     // Delete input value
+//     setInputValue("");
+//   }
 
   async function getOneLoanInfo(address) {
     const api_endpoint = `${API_BASE}/getLTV?address=${address}`;
@@ -67,16 +66,7 @@ export default function LoanAppraisalInfo() {
 
   return (
     <div>
-      <input
-        value={inputValue}
-        type="text"
-        placeholder="NFT Address"
-        onChange={handleInputChange}
-      />
-      <Button variant="contained" onClick={handleOnAddNFT}>
-        {" "}
-        Add NFT
-      </Button>
+
       <h3>Added NFTs</h3>
       <ul>
         {contractAddresses.map((address) => (

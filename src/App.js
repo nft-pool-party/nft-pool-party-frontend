@@ -1,5 +1,7 @@
+
 import "./App.css";
 import React, { useState, useEffect } from "react";
+
 import {
   AppBar,
   Button,
@@ -20,6 +22,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ethers } from "ethers";
 import LoanAppraisalInfo from "./LoanAppraisalInfo";
 import ConnectWallet from "./connectWallet";
+import getNFTs from "./getNFTs";
+require('dotenv').config();
+
 
 // //  Create WalletConnect Provider
 // const provider = new WalletConnectProvider({
@@ -45,6 +50,15 @@ const cards = [1, 2, 3];
 function App() {
   const [address, setAddress] = useState("");
   const [provider, setProvider] = useState(null);
+  const [nfts, setNfts] = useState("");
+  const [contractAddresses, setContractAddresses] = useState([]);
+
+  useEffect(() =>{
+    if(address){
+      getNFTs(address, setNfts);
+      console.log(nfts);
+    }
+  },[address])
 
   return (
     <ThemeProvider theme={theme}>
@@ -94,11 +108,11 @@ function App() {
               color="text.secondary"
               paragraph
             >
-              Appraise your NFT for a loan
+              Appraise your NFTs for a loan
             </Typography>
-            Address: {address}
 
-            <LoanAppraisalInfo></LoanAppraisalInfo>
+
+            <LoanAppraisalInfo contractAddresses={contractAddresses}/>
 
             {/*
 
@@ -107,10 +121,10 @@ function App() {
              */}
           </Container>
         </Box>
-        {/* <Container sx={{ py: 8 }} maxWidth="md">
+        <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {nfts && JSON.parse(nfts).map((nft) => (
+              <Grid item key={nft} xs={12} sm={6} md={4}>
                 <Card
                   sx={{
                     height: "100%",
@@ -124,27 +138,27 @@ function App() {
                       // 16:9
                       pt: "56.25%",
                     }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
+                    image={nft.metadata.image}
+                    alt={nft.metadata.name}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {nft.metadata.name}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                      {nft.metadata.description}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                  <CardActions sx={{display: "flex", justifyContent: "center"}}>
+                    <Button variant="contained" onClick={() => {
+                      setContractAddresses([...contractAddresses, nft.contract.address]);
+                    }}>Add</Button>
                   </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
-        </Container> */}
+        </Container>
       </main>
       {/* Footer */}
       {/* <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
