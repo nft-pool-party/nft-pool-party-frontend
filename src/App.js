@@ -1,4 +1,3 @@
-
 import "./App.css";
 import React, { useState, useEffect } from "react";
 
@@ -23,8 +22,7 @@ import { ethers } from "ethers";
 import LoanAppraisalInfo from "./LoanAppraisalInfo";
 import ConnectWallet from "./connectWallet";
 import getNFTs from "./getNFTs";
-require('dotenv').config();
-
+import logo from './logo.png';
 
 // //  Create WalletConnect Provider
 // const provider = new WalletConnectProvider({
@@ -49,22 +47,26 @@ const cards = [1, 2, 3];
 
 function App() {
   const [address, setAddress] = useState("");
+  const [temp, setTemp] = useState("");
+  const [inputAddress, setInputAddress] = useState("");
   const [provider, setProvider] = useState(null);
   const [nfts, setNfts] = useState("");
   const [contractAddresses, setContractAddresses] = useState([]);
+  const [names, setNames] = useState([]);
 
-  useEffect(() =>{
-    if(address){
-      getNFTs(address, setNfts);
+  useEffect(() => {
+    if (address) {
+      getNFTs("0x959e104e1a4db6317fa58f8295f586e1a978c297", setNfts);
       console.log(nfts);
     }
-  },[address])
+  }, [address]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+
           <Typography variant="h6" color="inherit" noWrap>
             Pool Party NFT
           </Typography>
@@ -81,18 +83,18 @@ function App() {
           }}
         >
           <Container maxWidth="sm">
-            {/* <Box
+          <Box
         component="img"
         sx={{
-          height: 233,
-          width: 350,
+          width: "20%",
           maxHeight: { xs: 233, md: 167 },
           maxWidth: { xs: 350, md: 250 },
-          marginLeft: "27%"
+          marginLeft: "40%",
+          marginBottom: 2
         }}
         alt="Cool pool"
-        src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
-      /> */}
+        src={logo}
+      />
             <Typography
               component="h1"
               variant="h2"
@@ -111,53 +113,78 @@ function App() {
               Appraise your NFTs for a loan
             </Typography>
 
+            {/* <Stack sx={{ pt: 4 }} spacing={2} alignItems="center">
+              <TextField
+                align="center"
+                label="Paste an Address"
+                variant="outlined"
+                sx={{ width: "75%" }}
+                onChange={(e) => {
+                  setTemp(e.target.value);
+                }}
+              />
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setInputAddress(temp);
+                }}
+              >
+                {" "}
+                Add your NFTs
+              </Button>
+            </Stack> */}
+            <LoanAppraisalInfo contractAddresses={contractAddresses} names= {names}/>
 
-            <LoanAppraisalInfo contractAddresses={contractAddresses}/>
-
-            {/*
-
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-             */}
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container maxWidth="md">
           <Grid container spacing={4}>
-            {nfts && JSON.parse(nfts).map((nft) => (
-              <Grid item key={nft} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
+            {nfts &&
+              JSON.parse(nfts).map((nft) => (
+                <Grid item key={nft} xs={12} sm={6} md={4}>
+                  <Card
                     sx={{
-                      // 16:9
-                      pt: "56.25%",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
-                    image={nft.metadata.image}
-                    alt={nft.metadata.name}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {nft.metadata.name}
-                    </Typography>
-                    <Typography>
-                      {nft.metadata.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions sx={{display: "flex", justifyContent: "center"}}>
-                    <Button variant="contained" onClick={() => {
-                      setContractAddresses([...contractAddresses, nft.contract.address]);
-                    }}>Add</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+                  >
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image={nft.metadata.image}
+                      alt={nft.metadata.name}
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {nft.metadata.name}
+                      </Typography>
+                      <Typography>{nft.metadata.description}</Typography>
+                    </CardContent>
+                    <CardActions
+                      sx={{ display: "flex", justifyContent: "center" }}
+                    >
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setContractAddresses([
+                            ...contractAddresses,
+                            nft.contract.address,
+                          ]);
+                          setNames([...names, nft.metadata.name]);
+                        }}
+                      >
+                        Add
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
+
         </Container>
       </main>
       {/* Footer */}

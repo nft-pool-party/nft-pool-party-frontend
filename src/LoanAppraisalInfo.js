@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-export default function LoanAppraisalInfo({contractAddresses}) {
+export default function LoanAppraisalInfo({contractAddresses, names}) {
   const API_BASE = "https://nameless-plateau-97799.herokuapp.com/";
 
   const [inputValue, setInputValue] = useState("");
@@ -65,14 +65,12 @@ export default function LoanAppraisalInfo({contractAddresses}) {
   }
 
   return (
-    <div>
+    <Box sx={{textAlign: "center", borderStyle: "solid", marginTop: 5}} >
 
-      <h3>Added NFTs</h3>
-      <ul>
-        {contractAddresses.map((address) => (
-          <li>{address}</li>
+      <h3>Added NFTs:</h3>
+            {names.map((name) => (
+         <p><i>{name}</i></p> 
         ))}
-      </ul>
 
       <Button variant="contained" onClick={handleGetLoanInfo}>
         {" "}
@@ -80,6 +78,6 @@ export default function LoanAppraisalInfo({contractAddresses}) {
       </Button>
       <h3>Maximum Loan Amount: {totalLoanAmount.toFixed(2)}</h3>
       <h3>Overall LTV Ratio: {(ltvRatio * 100).toFixed(1)}% </h3>
-    </div>
+    </Box>
   );
 }

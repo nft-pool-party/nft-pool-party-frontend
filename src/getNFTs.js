@@ -3,11 +3,10 @@ import axios from 'axios';
 
 export default function getNFTs(address, setNFTs){
 
-// replace with your Alchemy api key
-const apiKey = "demo";
-const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/VvFictdZv49HDRVG2STvkRu-h3jdcmgK/getNFTs/`;
-// replace with the wallet address you want to query for NFTs
+const baseURL = "https://eth-mainnet.alchemyapi.io/nft/v2/hA2ONXLuakmXgxSTdhzyGU3-hZC6339Z/getNFTs/";
 const ownerAddr = address;
+const contractAddrs = ["0x1485297e942ce64E0870EcE60179dFda34b4C625", "0x8a90CAb2b38dba80c64b7734e58Ee1dB38B8992e", "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"];
+
 
 var config = {
   method: 'get',
@@ -16,6 +15,7 @@ var config = {
 
 axios(config)
 .then((response) => {
+    console.log(response.data.ownedNfts);
     setNFTs(JSON.stringify(response.data.ownedNfts));
 })
 .catch(error => console.log(error));
