@@ -20,6 +20,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ethers } from "ethers";
 import LoanAppraisalInfo from "./LoanAppraisalInfo";
 import ConnectWallet from "./connectWallet";
+import { Lend } from './Lend';
 
 // //  Create WalletConnect Provider
 // const provider = new WalletConnectProvider({
@@ -99,6 +100,9 @@ function App() {
             Address: {address}
 
             <LoanAppraisalInfo></LoanAppraisalInfo>
+
+             
+            <Button><a href="/lend" variant="contained">Lend</a></Button>
 
             {/*
 
