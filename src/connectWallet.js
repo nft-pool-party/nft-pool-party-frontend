@@ -102,7 +102,7 @@ const web3Onboard = init({
   }
 })
 
-function ConnectWallet() {
+function ConnectWallet({setProvider, setAddress}) {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
   const connectedWallets = useWallets()
@@ -114,6 +114,8 @@ function ConnectWallet() {
     } else {
     // After this is set you can use the provider to sign or transact 
       provider = new ethers.providers.Web3Provider(wallet.provider, 'any');
+      setProvider(provider);
+      setAddress(wallet.accounts[0].address);
     }
   }, [wallet])
 
