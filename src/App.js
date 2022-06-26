@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Button,
@@ -18,8 +19,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-// import WalletConnectProvider from "@walletconnect/web3-provider";
-
+import ConnectWallet from "./connectWallet";
 
 
 
@@ -46,15 +46,36 @@ const theme = createTheme({
 const cards = [1, 2, 3];
 
 function App() {
+
+  useEffect(() => {
+    async function fetchData() {
+    const providerOptions = {
+
+      };
+    const web3Modal = new Web3Modal({
+      network: "mainnet", // optional
+      cacheProvider: true, // optional
+      providerOptions // required
+    })
+    
+    const instance = await web3Modal.connect();
+    
+    const provider = new ethers.providers.Web3Provider(instance);
+    const signer = provider.getSigner();
+    console.log(signer);
+  }
+  fetchData();
+  },[]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between"}}>
           <Typography variant="h6" color="inherit" noWrap>
             NFT Pool Party
           </Typography>
-          <Button color="secondary" variant="contained" sx={{marginLeft: "auto"}}> Connect Wallet</Button>
+          <ConnectWallet   />
 
         </Toolbar>
       </AppBar>
