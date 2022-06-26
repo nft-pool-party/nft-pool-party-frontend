@@ -18,10 +18,8 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ethers } from "ethers";
-import Web3Modal from "web3modal";
 import LoanAppraisalInfo from "./LoanAppraisalInfo";
 import ConnectWallet from "./connectWallet";
-
 
 // //  Create WalletConnect Provider
 // const provider = new WalletConnectProvider({
@@ -45,37 +43,18 @@ const theme = createTheme({
 const cards = [1, 2, 3];
 
 function App() {
-
-  useEffect(() => {
-    async function fetchData() {
-    const providerOptions = {
-
-      };
-    const web3Modal = new Web3Modal({
-      network: "mainnet", // optional
-      cacheProvider: true, // optional
-      providerOptions // required
-    })
-    
-    const instance = await web3Modal.connect();
-    
-    const provider = new ethers.providers.Web3Provider(instance);
-    const signer = provider.getSigner();
-    console.log(signer);
-  }
-  fetchData();
-  },[]);
+  const [address, setAddress] = useState("");
+  const [provider, setProvider] = useState(null);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar style={{ display: "flex", justifyContent: "space-between"}}>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6" color="inherit" noWrap>
-            NFT Pool Party
+            Pool Party NFT
           </Typography>
-          <ConnectWallet   />
-
+          <ConnectWallet setAddress={setAddress} setProvider={setProvider} />
         </Toolbar>
       </AppBar>
       <main>
@@ -85,11 +64,10 @@ function App() {
             bgcolor: "background.paper",
             pt: 5,
             pb: 6,
-            
           }}
         >
-          <Container maxWidth="sm" >
-          {/* <Box
+          <Container maxWidth="sm">
+            {/* <Box
         component="img"
         sx={{
           height: 233,
@@ -108,7 +86,7 @@ function App() {
               color="text.primary"
               gutterBottom
             >
-              NFT Pool Party
+              Pool Party NFT
             </Typography>
             <Typography
               variant="h5"
@@ -118,10 +96,9 @@ function App() {
             >
               Appraise your NFT for a loan
             </Typography>
-            
-            <LoanAppraisalInfo></LoanAppraisalInfo>
+            Address: {address}
 
-            
+            <LoanAppraisalInfo></LoanAppraisalInfo>
 
             {/*
 
