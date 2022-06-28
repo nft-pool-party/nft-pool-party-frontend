@@ -24,13 +24,6 @@ import ConnectWallet from "./connectWallet";
 import getNFTs from "./getNFTs";
 import logo from './logo.png';
 
-// //  Create WalletConnect Provider
-// const provider = new WalletConnectProvider({
-//   infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
-// });
-
-// //  Enable session (triggers QR Code modal)
-// await provider.enable();
 
 const theme = createTheme({
   palette: {
@@ -113,26 +106,6 @@ function App() {
               Appraise your NFTs for a loan
             </Typography>
 
-            {/* <Stack sx={{ pt: 4 }} spacing={2} alignItems="center">
-              <TextField
-                align="center"
-                label="Paste an Address"
-                variant="outlined"
-                sx={{ width: "75%" }}
-                onChange={(e) => {
-                  setTemp(e.target.value);
-                }}
-              />
-              <Button
-                variant="contained"
-                onClick={() => {
-                  setInputAddress(temp);
-                }}
-              >
-                {" "}
-                Add your NFTs
-              </Button>
-            </Stack> */}
             <LoanAppraisalInfo contractAddresses={contractAddresses} names= {names}/>
 
           </Container>
